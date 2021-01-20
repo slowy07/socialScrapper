@@ -8,7 +8,7 @@ selenium
 apiclient
 google-api-python-client==1.5.5
 bs2json
-pprint
+pprintpp
 httplib2
 oauth2client
 jsonlib-python3
