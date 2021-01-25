@@ -4,6 +4,7 @@ import ast
 import os
 from image import *
 import re
+from social.Instagram import Instagram
 
 
 R = '\033[31m' #red
