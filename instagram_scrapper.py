@@ -53,3 +53,33 @@ def scrap_insta(user):
                 j1 = ast.literal_eval(str(comments_batch['node']))
                 f1.write("\nOwner :"+j1['owner']['username'])
                 f1.write("\nText :"+j1['text'])
+                if j1['text'] in wordlist:
+                    print(R+"{} may be predator".format(j1['owner']['username'])+W)
+                    confidence.append(int(10))
+                    predator.append(j1['owner']['username'])
+            
+            f1.write("\nTimeStamp :"+str(i['node']['taken_at_timestamp']))
+            f1.write("\nDimension :"+str(i['node']['dimensions']['height']))
+            f1.write("\nURL :"+str(i['node']['display_url']))
+            urllib.request.urlretrieve(str(i['node']['display_url']), str(username1) + "/" + i['node']["id"]+".jpg")
+            f1.write("\nlikes :"+str(i['node']['edge_liked_by']['count']))
+            f1.write("\nLocation :"+str(i['node']["location"]))
+            f1.write("\nOwner :"+str(i['node']["owner"]["username"]))
+            f1.write("accessibility_caption: "+str(i['node']["accessibility_caption"]))
+            
+            if str(i['node']["accessibility_caption"]) in wordlist:
+                f1.write(R+"image may contain insecure content")
+            
+    print("\nPredator identity details:\n")
+    if len(predator) > 0:
+        for i in predator:
+            Instagram(i)
+            arr = os.listdir("./{}".format(str(i)))
+            for j in arr:
+                if re.match(r".+\.jpg",j):
+                    confidence[predator.index(i)] += imageai("./{}".format(str(i))+"/"+j)
+                    print(confidence[predator.index(i)])
+    
+    else:
+        return
+    f1.close()
